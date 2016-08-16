@@ -86,7 +86,7 @@ public partial class EmployeeWebForm : System.Web.UI.Page
             cbMonth.Items.Add(i.ToString());
             cbMonth1.Items.Add(i.ToString());
         }
-        for (int i = 1800; i <= 2020; i++)
+        for (int i = 1500; i <= 2020; i++)
         {
             cbYear.Items.Add(i.ToString());
             cbYear1.Items.Add(i.ToString());
@@ -106,19 +106,11 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         emp.hiredate = date;
         emp.address = txtAddress.Text;
         emp.city = cbCity.Text;
-
         if (cbRegion.SelectedIndex != 0) emp.region = cbRegion.Text;
-        else emp.region = null;
-
         if (!string.IsNullOrEmpty(txtPostalCode.Text)) emp.postalcode = txtPostalCode.Text;
-        else emp.postalcode = null;
-
         emp.country = cbCountry.Text;
         emp.phone = txtPhone.Text;
-
         if (int.Parse(cbManager.SelectedValue) > 0) emp.mgrid = int.Parse(cbManager.SelectedValue);
-        else emp.mgrid = null;
-
         entity.Employees.Add(emp);
         entity.SaveChanges();
         addNew = false;
@@ -131,38 +123,6 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         entity.SaveChanges();
     }
 
-    void update()
-    {
-        addNew = false;
-
-        int id = int.Parse(lbId.Text);
-        Employee emp = entity.Employees.First(x => x.empid == id);
-        emp.lastname = txtLastname.Text;
-        emp.firstname = txtFirstname.Text;
-        emp.title = cbTitle.Text;
-        emp.titleofcourtesy = RadioButtonList1.SelectedItem.Text;
-        DateTime date = DateTime.Parse(cbMonth.Text + "/" + cbDay.Text + "/" + cbYear.Text);
-        emp.birthdate = date;
-        date = DateTime.Parse(cbMonth1.Text + "/" + cbDay1.Text + "/" + cbYear1.Text);
-        emp.hiredate = date;
-        emp.address = txtAddress.Text;
-        emp.city = cbCity.Text;
-
-        if (cbRegion.SelectedIndex != 0) emp.region = cbRegion.Text;
-        else emp.region = null;
-
-        if (!string.IsNullOrEmpty(txtPostalCode.Text)) emp.postalcode = txtPostalCode.Text;
-        else emp.postalcode = null;
-
-        emp.country = cbCountry.Text;
-        emp.phone = txtPhone.Text;
-
-        if (int.Parse(cbManager.SelectedValue) > 0) emp.mgrid = int.Parse(cbManager.SelectedValue);
-        else emp.mgrid = null;
-
-        entity.SaveChanges();
-    }
-
     bool validate()
     {
         bool val = true;
@@ -171,8 +131,7 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         if (string.IsNullOrEmpty(txtFirstname.Text)) { val = false; errorFirstname.Text = "No empty allow"; } else { errorFirstname.Text = string.Empty; }
         int age = int.Parse(cbYear1.Text) - int.Parse(cbYear.Text);
         if (age < 18) { val = false; errorDate.Text = "Employee must older than equal 18"; } else { errorDate.Text = string.Empty; }
-        if (string.IsNullOrEmpty(txtAddress.Text)) { val = false; errorAddress.Text = "No empty allow"; } else { errorAddress.Text = string.Empty; }
-        if (string.IsNullOrEmpty(txtPhone.Text)) { val = false; errorPhone.Text = "No empty allow"; } else { errorPhone.Text = string.Empty; }
+        if (string.IsNullOrEmpty(txtAddress.Text)) { val = false; errorAddress.Text = "No empty allow"; }
 
         return val;
     }
@@ -244,14 +203,7 @@ public partial class EmployeeWebForm : System.Web.UI.Page
 
     protected void btnUpdate_Click(object sender, EventArgs e)
     {
-        if (validate())
-        {
-            update();
-            loadData();
-            initiateButton();
-            btnUpdate.Enabled = false;
-            btnDelete.Enabled = false;
-        }
+        
     }
 
     protected void btnDelete_Click(object sender, EventArgs e)
@@ -259,9 +211,6 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         int id = int.Parse(lbId.Text);
         delete(id);
         loadData();
-        initiateButton();
-        btnUpdate.Enabled = false;
-        btnDelete.Enabled = false;
     }
 
     protected void btnNew_Click(object sender, EventArgs e)
