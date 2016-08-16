@@ -65,7 +65,9 @@
                     Birthdate
                 </asp:TableCell>
                 <asp:TableCell>
-                    <asp:Calendar ID="calBirthdate" runat="server"></asp:Calendar>
+                    Day <asp:DropDownList ID="cbDay" runat="server"></asp:DropDownList> 
+                    Month <asp:DropDownList ID="cbMonth" runat="server"></asp:DropDownList> 
+                    Year <asp:DropDownList ID="cbYear" runat="server"></asp:DropDownList>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -74,7 +76,9 @@
                     Hiredate
                 </asp:TableCell>
                 <asp:TableCell>
-                    <asp:Calendar ID="calHiredate" runat="server"></asp:Calendar>
+                    Day <asp:DropDownList ID="cbDay1" runat="server"></asp:DropDownList> 
+                    Month <asp:DropDownList ID="cbMonth1" runat="server"></asp:DropDownList> 
+                    Year <asp:DropDownList ID="cbYear1" runat="server"></asp:DropDownList>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -98,7 +102,7 @@
 
             <asp:TableRow>
                 <asp:TableCell>
-                    City
+                    Region
                 </asp:TableCell>
                 <asp:TableCell>
                     <asp:DropDownList ID="cbRegion" runat="server"></asp:DropDownList>
@@ -107,7 +111,7 @@
 
             <asp:TableRow>
                 <asp:TableCell>
-                    City
+                    Postal Code
                 </asp:TableCell>
                 <asp:TableCell>
                     <asp:TextBox ID="txtPostalCode" runat="server"></asp:TextBox>
@@ -116,7 +120,7 @@
 
             <asp:TableRow>
                 <asp:TableCell>
-                    City
+                    Country
                 </asp:TableCell>
                 <asp:TableCell>
                     <asp:DropDownList ID="cbCountry" runat="server"></asp:DropDownList>
@@ -137,15 +141,34 @@
                     Manager
                 </asp:TableCell>
                 <asp:TableCell>
-                    <asp:TextBox ID="cbManager" runat="server"></asp:TextBox>
+                    <asp:DropDownList ID="cbManager" runat="server"></asp:DropDownList>
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
         <br />
-        <asp:GridView ID="GridView1" runat="server">
+
+        <asp:Button ID="btnAdd" runat="server" Text="Add" /> 
+        <asp:Button ID="btnUpdate" runat="server" Text="Update" /> 
+        <asp:Button ID="btnDelete" runat="server" Text="Delete" /> 
+        <asp:Button ID="btnNew" runat="server" Text="New" />
+
+        <br />
+        <br />
+        <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
+            <AlternatingRowStyle BackColor="White" />
             <Columns>
                 <asp:CommandField ShowSelectButton="True" />
             </Columns>
+            <EditRowStyle BackColor="#2461BF" />
+            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+            <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+            <RowStyle BackColor="#EFF3FB" />
+            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+            <SortedAscendingCellStyle BackColor="#F5F7FB" />
+            <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+            <SortedDescendingCellStyle BackColor="#E9EBEF" />
+            <SortedDescendingHeaderStyle BackColor="#4870BE" />
         </asp:GridView>
     </div>
     </form>
