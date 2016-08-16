@@ -15,7 +15,7 @@
                     ID
                 </asp:TableCell>
                 <asp:TableCell>
-                    <asp:Label ID="lbId" runat="server" Text="0"></asp:Label> 
+                    <asp:Label ID="lbId" runat="server" Text="0"></asp:Label>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -25,6 +25,7 @@
                 </asp:TableCell>
                 <asp:TableCell>
                     <asp:TextBox ID="txtLastname" runat="server"></asp:TextBox> 
+                    <asp:Label ID="errorLastname" runat="server" Text=""></asp:Label>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -34,6 +35,7 @@
                 </asp:TableCell>
                 <asp:TableCell>
                     <asp:TextBox ID="txtFirstname" runat="server"></asp:TextBox>
+                    <asp:Label ID="errorFirstname" runat="server" Text=""></asp:Label>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -43,6 +45,7 @@
                 </asp:TableCell>
                 <asp:TableCell>
                     <asp:DropDownList ID="cbTitle" runat="server"></asp:DropDownList>
+                    <asp:Label ID="errorTitle" runat="server" Text=""></asp:Label>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -79,6 +82,7 @@
                     Day <asp:DropDownList ID="cbDay1" runat="server"></asp:DropDownList> 
                     Month <asp:DropDownList ID="cbMonth1" runat="server"></asp:DropDownList> 
                     Year <asp:DropDownList ID="cbYear1" runat="server"></asp:DropDownList>
+                    <asp:Label ID="errorDate" runat="server" Text=""></asp:Label>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -88,6 +92,7 @@
                 </asp:TableCell>
                 <asp:TableCell>
                     <asp:TextBox ID="txtAddress" runat="server" Rows="10" Columns="50"></asp:TextBox>
+                    <asp:Label ID="errorAddress" runat="server" Text=""></asp:Label>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -115,6 +120,7 @@
                 </asp:TableCell>
                 <asp:TableCell>
                     <asp:TextBox ID="txtPostalCode" runat="server"></asp:TextBox>
+                    <asp:Label ID="errorPostalCode" runat="server" Text=""></asp:Label>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -133,6 +139,7 @@
                 </asp:TableCell>
                 <asp:TableCell>
                     <asp:TextBox ID="txtPhone" runat="server"></asp:TextBox>
+                    <asp:Label ID="errorPhone" runat="server" Text=""></asp:Label>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -142,6 +149,7 @@
                 </asp:TableCell>
                 <asp:TableCell>
                     <asp:DropDownList ID="cbManager" runat="server"></asp:DropDownList>
+                    <asp:Label ID="errorManager" runat="server" Text=""></asp:Label>
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
@@ -150,7 +158,7 @@
         <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_Click" /> 
         <asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="btnUpdate_Click" /> 
         <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click" /> 
-        <asp:Button ID="btnNew" runat="server" Text="New" />
+        <asp:Button ID="btnNew" runat="server" Text="New" OnClick="btnNew_Click"/>
 
         <br />
         <br />

@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 public partial class EmployeeWebForm : System.Web.UI.Page
 {
     TSQLFundamentals2008Entities entity = new TSQLFundamentals2008Entities();
+    bool addNew = false;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -15,6 +16,24 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         {
             date();
             loadData();
+            initiateButton();
+            btnUpdate.Enabled = false;
+            btnDelete.Enabled = false;
+        }
+    }
+
+    void initiateButton()
+    {
+        if (addNew)
+        {
+            btnAdd.Enabled = true;
+            btnUpdate.Enabled = false;
+            btnDelete.Enabled = false;
+        } else
+        {
+            btnAdd.Enabled = false;
+            btnUpdate.Enabled = true;
+            btnDelete.Enabled = true;
         }
     }
 
@@ -94,6 +113,7 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         if (int.Parse(cbManager.SelectedValue) > 0) emp.mgrid = int.Parse(cbManager.SelectedValue);
         entity.Employees.Add(emp);
         entity.SaveChanges();
+        addNew = false;
     }
 
     void delete(int id)
@@ -107,7 +127,7 @@ public partial class EmployeeWebForm : System.Web.UI.Page
     {
         bool val = true;
 
-
+        if (string.IsNullOrEmpty(txtLastname.Text)) { val = false; errorLastname.Text = "No empty allow"; }
 
         return val;
     }
@@ -160,18 +180,26 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         {
             cbManager.Text = r.Cells[14].Text;
         }
-        
+
+        addNew = false;
+        initiateButton();
     }
 
     protected void btnAdd_Click(object sender, EventArgs e)
     {
-        if (validate()) add();
-        loadData();
+        if (validate())
+        {
+            add();
+            loadData();
+            initiateButton();
+            btnUpdate.Enabled = false;
+            btnDelete.Enabled = false;
+        }
     }
 
     protected void btnUpdate_Click(object sender, EventArgs e)
     {
-        Response.Write("<script>alert('" + cbManager.SelectedValue + "');</script>");
+        
     }
 
     protected void btnDelete_Click(object sender, EventArgs e)
@@ -179,6 +207,12 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         int id = int.Parse(lbId.Text);
         delete(id);
         loadData();
+    }
+
+    protected void btnNew_Click(object sender, EventArgs e)
+    {
+        addNew = true;
+        initiateButton();
     }
 }
 
