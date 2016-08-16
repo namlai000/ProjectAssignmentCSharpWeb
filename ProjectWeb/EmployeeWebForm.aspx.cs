@@ -127,7 +127,11 @@ public partial class EmployeeWebForm : System.Web.UI.Page
     {
         bool val = true;
 
-        if (string.IsNullOrEmpty(txtLastname.Text)) { val = false; errorLastname.Text = "No empty allow"; }
+        if (string.IsNullOrEmpty(txtLastname.Text)) { val = false; errorLastname.Text = "No empty allow"; } else { errorLastname.Text = string.Empty; }
+        if (string.IsNullOrEmpty(txtFirstname.Text)) { val = false; errorFirstname.Text = "No empty allow"; } else { errorFirstname.Text = string.Empty; }
+        int age = int.Parse(cbYear1.Text) - int.Parse(cbYear.Text);
+        if (age < 18) { val = false; errorDate.Text = "Employee must older than equal 18"; } else { errorDate.Text = string.Empty; }
+        if (string.IsNullOrEmpty(txtAddress.Text)) { val = false; errorAddress.Text = "No empty allow"; }
 
         return val;
     }
