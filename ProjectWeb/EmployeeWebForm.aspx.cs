@@ -7,12 +7,15 @@ using System.Web.UI.WebControls;
 
 public partial class EmployeeWebForm : System.Web.UI.Page
 {
-    TSQLFundamentals2008Entities entity;
+    TSQLFundamentals2008Entities entity = new TSQLFundamentals2008Entities();
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        date();
-        loadData();
+        if (!this.IsPostBack)
+        {
+            date();
+            loadData();
+        }
     }
 
     void loadData()
@@ -36,7 +39,7 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         cbRegion.Items.Clear();
         foreach (Employee emp in list)
         {
-            if (!string.IsNullOrEmpty(emp.region)) cbRegion.Items.Add(new ListItem(emp.region));
+            if (!string.IsNullOrEmpty(emp.region) && !cbRegion.Items.Contains(new ListItem(emp.region))) cbRegion.Items.Add(new ListItem(emp.region));
         }
         cbRegion.Items.Insert(0, new ListItem("Choose a region"));
 
@@ -45,10 +48,11 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         cbCountry.DataBind();
 
         // Manager
-        cbManager.DataSource = list;
-        cbManager.DataTextField = "lastname";
-        cbManager.DataValueField = "empid";
+        cbManager.DataSource = entity.Database.SqlQuery<Emp>("SELECT empid AS id, (lastname + ' ' + firstname) AS name FROM HR.Employees").ToList();
+        cbManager.DataTextField = "name";
+        cbManager.DataValueField = "id";
         cbManager.DataBind();
+        cbManager.Items.Insert(0, new ListItem("Choose a manager", "-1"));
     }
 
     void date()
@@ -70,6 +74,37 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         }
     }
 
+    void add()
+    {
+        Employee emp = new Employee();
+        emp.lastname = txtLastname.Text;
+        emp.firstname = txtFirstname.Text;
+        emp.title = cbTitle.Text;
+        emp.titleofcourtesy = RadioButtonList1.SelectedItem.Text;
+        DateTime date = DateTime.Parse(cbMonth.Text + "/" + cbDay.Text + "/" + cbYear.Text);
+        emp.birthdate = date;
+        date = DateTime.Parse(cbMonth1.Text + "/" + cbDay1.Text + "/" + cbYear1.Text);
+        emp.hiredate = date;
+        emp.address = txtAddress.Text;
+        emp.city = cbCity.Text;
+        if (cbRegion.SelectedIndex != 0) emp.region = cbRegion.Text;
+        if (!string.IsNullOrEmpty(txtPostalCode.Text)) emp.postalcode = txtPostalCode.Text;
+        emp.country = cbCountry.Text;
+        emp.phone = txtPhone.Text;
+        if (int.Parse(cbManager.SelectedValue) > 0) emp.mgrid = int.Parse(cbManager.SelectedValue);
+        entity.Employees.Add(emp);
+        entity.SaveChanges();
+    }
+
+    bool validate()
+    {
+        bool val = true;
+
+
+
+        return val;
+    }
+
     protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
     {
         GridViewRow r = GridView1.SelectedRow;
@@ -80,9 +115,9 @@ public partial class EmployeeWebForm : System.Web.UI.Page
 
         string cortesy = r.Cells[5].Text;
         if (rbMr.Text.Equals(cortesy)) rbMr.Selected = true;
-        else if (rbMs.Text.Equals(cortesy)) rbMs.Selected = true;
-        else if (rbDr.Text.Equals(cortesy)) rbDr.Selected = true;
-        else rbMrs.Selected = true;
+        if (rbMs.Text.Equals(cortesy)) rbMs.Selected = true;
+        if (rbDr.Text.Equals(cortesy)) rbDr.Selected = true;
+        if (rbMrs.Text.Equals(cortesy)) rbMrs.Selected = true;
 
         string date = DateTime.Parse(r.Cells[6].Text).ToShortDateString();
         string[] tmp = date.Split('/');
@@ -107,9 +142,39 @@ public partial class EmployeeWebForm : System.Web.UI.Page
             cbRegion.Text = r.Cells[10].Text;
         }
 
-        txtPostalCode.Text = string.IsNullOrEmpty(r.Cells[11].Text) ? "" : r.Cells[11].Text;
+        txtPostalCode.Text = string.IsNullOrEmpty(r.Cells[11].Text) || r.Cells[11].Text.StartsWith("&") ? "" : r.Cells[11].Text;
         cbCountry.Text = r.Cells[12].Text;
         txtPhone.Text = r.Cells[13].Text;
-        cbManager.Text = r.Cells[14].Text;
+
+        if (string.IsNullOrEmpty(r.Cells[14].Text) || r.Cells[14].Text.StartsWith("&"))
+        {
+            cbManager.SelectedIndex = 0;
+        } else
+        {
+            cbManager.Text = r.Cells[14].Text;
+        }
+        
+    }
+
+    class Emp
+    {
+        int id;
+        string name;
+
+        public Emp() { }
+
+        public int ID { get; set; }
+        public string NAME { get; set; }
+    }
+
+    protected void btnAdd_Click(object sender, EventArgs e)
+    {
+        if (validate()) add();
+        loadData();
+    }
+
+    protected void btnUpdate_Click(object sender, EventArgs e)
+    {
+        Response.Write("<script>alert('" + cbManager.SelectedValue + "');</script>");
     }
 }

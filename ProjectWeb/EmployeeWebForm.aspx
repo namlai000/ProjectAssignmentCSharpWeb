@@ -15,7 +15,7 @@
                     ID
                 </asp:TableCell>
                 <asp:TableCell>
-                    <asp:Label ID="lbId" runat="server" Text="0"></asp:Label>
+                    <asp:Label ID="lbId" runat="server" Text="0"></asp:Label> 
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -24,7 +24,7 @@
                     Lastname
                 </asp:TableCell>
                 <asp:TableCell>
-                    <asp:TextBox ID="txtLastname" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtLastname" runat="server"></asp:TextBox> 
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -147,8 +147,8 @@
         </asp:Table>
         <br />
 
-        <asp:Button ID="btnAdd" runat="server" Text="Add" /> 
-        <asp:Button ID="btnUpdate" runat="server" Text="Update" /> 
+        <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_Click" /> 
+        <asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="btnUpdate_Click" /> 
         <asp:Button ID="btnDelete" runat="server" Text="Delete" /> 
         <asp:Button ID="btnNew" runat="server" Text="New" />
 
