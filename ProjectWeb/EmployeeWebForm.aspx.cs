@@ -96,6 +96,13 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         entity.SaveChanges();
     }
 
+    void delete(int id)
+    {
+        Employee e = entity.Employees.First(x => x.empid == id);
+        entity.Employees.Remove(e);
+        entity.SaveChanges();
+    }
+
     bool validate()
     {
         bool val = true;
@@ -156,17 +163,6 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         
     }
 
-    class Emp
-    {
-        int id;
-        string name;
-
-        public Emp() { }
-
-        public int ID { get; set; }
-        public string NAME { get; set; }
-    }
-
     protected void btnAdd_Click(object sender, EventArgs e)
     {
         if (validate()) add();
@@ -177,4 +173,22 @@ public partial class EmployeeWebForm : System.Web.UI.Page
     {
         Response.Write("<script>alert('" + cbManager.SelectedValue + "');</script>");
     }
+
+    protected void btnDelete_Click(object sender, EventArgs e)
+    {
+        int id = int.Parse(lbId.Text);
+        delete(id);
+        loadData();
+    }
+}
+
+class Emp
+{
+    int id;
+    string name;
+
+    public Emp() { }
+
+    public int ID { get; set; }
+    public string NAME { get; set; }
 }
