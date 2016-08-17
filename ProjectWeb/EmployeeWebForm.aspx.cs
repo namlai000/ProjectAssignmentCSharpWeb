@@ -186,10 +186,34 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         cbTitle.Text = r.Cells[4].Text;
 
         string cortesy = r.Cells[5].Text;
-        if (rbMr.Text.Equals(cortesy)) rbMr.Selected = true;
-        if (rbMs.Text.Equals(cortesy)) rbMs.Selected = true;
-        if (rbDr.Text.Equals(cortesy)) rbDr.Selected = true;
-        if (rbMrs.Text.Equals(cortesy)) rbMrs.Selected = true;
+        if (rbMr.Text.Equals(cortesy))
+        {
+            rbMr.Selected = true;
+            rbMs.Selected = false;
+            rbDr.Selected = false;
+            rbMrs.Selected = false;
+        }
+        if (rbMs.Text.Equals(cortesy))
+        {
+            rbMr.Selected = false;
+            rbMs.Selected = true;
+            rbDr.Selected = false;
+            rbMrs.Selected = false;
+        }
+        if (rbDr.Text.Equals(cortesy))
+        {
+            rbMr.Selected = false;
+            rbMs.Selected = false;
+            rbDr.Selected = true;
+            rbMrs.Selected = false;
+        }
+        if (rbMrs.Text.Equals(cortesy))
+        {
+            rbMr.Selected = false;
+            rbMs.Selected = false;
+            rbDr.Selected = false;
+            rbMrs.Selected = true;
+        }
 
         string date = DateTime.Parse(r.Cells[6].Text).ToShortDateString();
         string[] tmp = date.Split('/');
