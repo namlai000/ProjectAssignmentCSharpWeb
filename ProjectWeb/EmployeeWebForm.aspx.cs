@@ -291,7 +291,23 @@ public partial class EmployeeWebForm : System.Web.UI.Page
     protected void btnNew_Click(object sender, EventArgs e)
     {
         addNew = true;
+        ResetControl();
         initiateButton();
+    }
+
+    void ResetControl()
+    {
+        lbId.Text = string.Empty;
+        txtLastname.Text = string.Empty;
+        txtFirstname.Text = string.Empty;
+        cbTitle.SelectedIndex = 0;
+        txtAddress.Text = string.Empty;
+        cbCity.SelectedIndex = 0;
+        cbRegion.SelectedIndex = 0;
+        txtPostalCode.Text = string.Empty;
+        cbCountry.SelectedIndex = 0;
+        txtPhone.Text = string.Empty;
+        cbManager.SelectedIndex = 0;
     }
 }
 
