@@ -159,6 +159,7 @@
         <asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="btnUpdate_Click" /> 
         <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click" /> 
         <asp:Button ID="btnNew" runat="server" Text="New" OnClick="btnNew_Click"/>
+        <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click" />
 
         <br />
         <br />

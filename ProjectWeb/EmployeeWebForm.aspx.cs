@@ -344,6 +344,11 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         txtPhone.Text = string.Empty;
         cbManager.SelectedIndex = 0;
     }
+
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("EmployeeSearch.aspx");
+    }
 }
 
 class Emp
