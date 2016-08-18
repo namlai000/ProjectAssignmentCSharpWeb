@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 public partial class EmployeeWebForm : System.Web.UI.Page
 {
@@ -63,7 +65,9 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         cbRegion.Items.Insert(0, new ListItem("Choose a region"));
 
         // Country
-        cbCountry.DataSource = list.Select(x => x.country).Distinct();
+        cbCountry.DataSource = getCountriesList();
+        cbCountry.DataTextField = "Key";
+        cbCountry.DataValueField = "Value";
         cbCountry.DataBind();
 
         // Manager
@@ -72,6 +76,25 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         cbManager.DataValueField = "id";
         cbManager.DataBind();
         cbManager.Items.Insert(0, new ListItem("Choose a manager", "-1"));
+    }
+
+    SortedDictionary<string, string> getCountriesList()
+    {
+        SortedDictionary<string, string> cultureList = new SortedDictionary<string, string>();
+
+        CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
+
+        foreach (CultureInfo culture in cultures)
+        {
+            RegionInfo region = new RegionInfo(culture.LCID);
+
+            if (!(cultureList.Keys.Contains(region.EnglishName)))
+            {
+                cultureList.Add(region.EnglishName, region.TwoLetterISORegionName);
+            }
+        }
+
+        return cultureList;
     }
 
     void date()
@@ -113,7 +136,7 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         if (!string.IsNullOrEmpty(txtPostalCode.Text)) emp.postalcode = txtPostalCode.Text;
         else emp.postalcode = null;
 
-        emp.country = cbCountry.Text;
+        emp.country = cbCountry.SelectedValue.ToString();
         emp.phone = txtPhone.Text;
 
         if (int.Parse(cbManager.SelectedValue) > 0) emp.mgrid = int.Parse(cbManager.SelectedValue);
@@ -154,7 +177,7 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         if (!string.IsNullOrEmpty(txtPostalCode.Text)) emp.postalcode = txtPostalCode.Text;
         else emp.postalcode = null;
 
-        emp.country = cbCountry.Text;
+        emp.country = cbCountry.SelectedValue.ToString();
         emp.phone = txtPhone.Text;
 
         if (int.Parse(cbManager.SelectedValue) > 0) emp.mgrid = int.Parse(cbManager.SelectedValue);
@@ -173,6 +196,13 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         if (age < 18) { val = false; errorDate.Text = "Employee must older than equal 18"; } else { errorDate.Text = string.Empty; }
         if (string.IsNullOrEmpty(txtAddress.Text)) { val = false; errorAddress.Text = "No empty allow"; } else { errorAddress.Text = string.Empty; }
         if (string.IsNullOrEmpty(txtPhone.Text)) { val = false; errorPhone.Text = "No empty allow"; } else { errorPhone.Text = string.Empty; }
+        if (!string.IsNullOrEmpty(txtPostalCode.Text))
+        {
+            if (!Regex.IsMatch(txtPostalCode.Text, "\\d+")) { val = false; errorPostalCode.Text = "Invalid postal code"; } else { errorPostalCode.Text = string.Empty; }
+        } else
+        {
+            errorPostalCode.Text = string.Empty;
+        }
 
         return val;
     }
@@ -239,7 +269,10 @@ public partial class EmployeeWebForm : System.Web.UI.Page
         }
 
         txtPostalCode.Text = string.IsNullOrEmpty(r.Cells[11].Text) || r.Cells[11].Text.StartsWith("&") ? "" : r.Cells[11].Text;
-        cbCountry.Text = r.Cells[12].Text;
+
+        ListItem item = cbCountry.Items.FindByValue(r.Cells[12].Text);
+        cbCountry.SelectedIndex = cbCountry.Items.IndexOf(item);
+
         txtPhone.Text = r.Cells[13].Text;
 
         if (string.IsNullOrEmpty(r.Cells[14].Text) || r.Cells[14].Text.StartsWith("&"))
@@ -247,7 +280,9 @@ public partial class EmployeeWebForm : System.Web.UI.Page
             cbManager.SelectedIndex = 0;
         } else
         {
-            cbManager.Text = r.Cells[14].Text;
+            ListItem item2 = cbManager.Items.FindByValue(r.Cells[14].Text);
+            cbManager.SelectedIndex = cbManager.Items.IndexOf(item2);
+            //cbManager.Text = r.Cells[14].Text;
         }
 
         addNew = false;

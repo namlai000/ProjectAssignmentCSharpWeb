@@ -11,9 +11,17 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <a href="EmployeeWebForm.aspx">Employee Web Form</a><br />
-        <a href="ProductWebs.aspx">Product Web</a>
-        <a href="Supplier.aspx">Supplier Web</a>
+        <h4>Human Resources</h4>
+        - <a href="EmployeeWebForm.aspx">Employee Web Form</a><br />
+        <br />
+
+        <h4>Production</h4>
+        - <a href="ProductWebs.aspx">Product Web</a><br />
+        - <a href="Supplier.aspx">Supplier Web</a><br />
+        <br />
+
+        <h4>Sales</h4>
+        <br />
     </div>
     </form>
 </body>
