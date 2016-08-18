@@ -13,6 +13,7 @@
     <div>
         <a href="EmployeeWebForm.aspx">Employee Web Form</a><br />
         <a href="ProductWebs.aspx">Product Web</a>
+        <a href="Supplier.aspx">Supplier Web</a>
     </div>
     </form>
 </body>

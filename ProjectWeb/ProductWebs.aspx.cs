@@ -40,7 +40,9 @@ public partial class ProductWeb : System.Web.UI.Page
         if (check.Checked==true)
         {
             chkDiscon.Checked = true;
-        } chkDiscon.Checked = false;
+        } 
+        else
+            chkDiscon.Checked = false;
     }
     void add()
     {
@@ -92,8 +94,28 @@ public partial class ProductWeb : System.Web.UI.Page
     }
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        int id = int.Parse(lbID.Text);
-        delete(id);
-        loadData();
+        try
+        {
+            int id = int.Parse(lbID.Text);
+            delete(id);
+            loadData();
+        }
+        catch(Exception ex)
+        {
+            Response.Write("<script>alert(" + ex.Message + ")</script>");
+        }
+       
+    }
+    protected void btnFresh_Click(object sender, EventArgs e)
+    {
+        txtName.Text = "";
+        txtPrice.Text = "";
+        lbID.Text = "ID";
+        cbSupplier.ClearSelection();
+        cbCategory.ClearSelection();
+        if (chkDiscon.Checked == true)
+        {
+            chkDiscon.Checked = false;
+        }
     }
 }
