@@ -48,7 +48,20 @@ public partial class OrderDetails : System.Web.UI.Page
         entity.OrderDetails.Remove(order);
         entity.SaveChanges();
     }
-
+    void update()
+    {
+        GridViewRow r = GridView1.SelectedRow;
+        int id;
+        int.TryParse(r.Cells[1].Text, out id);
+        OrderDetail order = entity.OrderDetails.First(x => x.orderid == id);
+        order.orderid = int.Parse(cbOrderID.Text);
+        order.productid = int.Parse(cbProductID.Text);
+        order.unitprice = int.Parse(txtUnitPrice.Text);
+        order.qty = short.Parse(txtQuantity.Text);
+        order.discount = int.Parse(txtDiscount.Text);
+        entity.OrderDetails.Add(order);
+        entity.SaveChanges();
+    }
 
     protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -61,5 +74,30 @@ public partial class OrderDetails : System.Web.UI.Page
         txtUnitPrice.Text = order.unitprice.ToString();
         txtQuantity.Text = order.qty.ToString();
         txtDiscount.Text = order.discount.ToString();
+    }
+
+    protected void btnAdd_Click(object sender, EventArgs e)
+    {
+        add();
+    }
+
+    protected void btnDelete_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            delete();
+        }
+        catch (Exception)
+        {
+            Response.Write("<script>alert('Can not delete!');</script>");
+        }
+        
+    }
+
+    protected void btnReset_Click(object sender, EventArgs e)
+    {
+        txtUnitPrice.Text = string.Empty;
+        txtQuantity.Text = string.Empty;
+        txtDiscount.Text = string.Empty;
     }
 }
