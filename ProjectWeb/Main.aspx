@@ -18,9 +18,14 @@
         <h4>Production</h4>
         - <a href="ProductWebs.aspx">Product Web</a><br />
         - <a href="Supplier.aspx">Supplier Web</a><br />
+        - <a href="Categories.aspx">Categories Web</a><br />
         <br />
 
         <h4>Sales</h4>
+        - <a href="OrderDetails.aspx">Order Details</a><br />
+        - <a href="OrderDetails.aspx">Shippers Web</a><br />
+        - <a href="FrmOrders.aspx">Orders Web</a><br />
+        - <a href="FrmOrders.aspx">Customers Web</a><br />
         <br />
     </div>
     </form>
